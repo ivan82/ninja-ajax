@@ -27,7 +27,7 @@ NinjaAjax.prototype = {
 	},
 
 	bindSettings: function(settings){
-		Ninja.prototype.extend(this, settings);
+		this.extend(this, settings);
 	},
 
 	addHeader: function(name, data){
@@ -128,5 +128,22 @@ NinjaAjax.prototype = {
 		if(!request){ return; }
 		var contentType = request.getResponseHeader('content-type');
 		return contentType && contentType.indexOf('application/json') != -1;
+	},
+
+	extend: function(){
+		if(arguments.length === 0){ return; }
+		var x = arguments.length === 1 ? this : arguments[0];
+		var y;
+
+		for(var i = 1, len = arguments.length; i < len; i++) {
+			y = arguments[i];
+			for(var key in y){
+				if(y.hasOwnProperty(key)){
+					x[key] = y[key];
+				}
+			}
+		}
+
+		return x;
 	}
 };
